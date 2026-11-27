@@ -5,7 +5,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-MODEL_PATH = "/content/drive/MyDrive/CACIP/models/CACIP_V3.keras"
+MODEL_PATH = "models/CACIP_V3.keras"
 LOGO_PATH = "/content/drive/MyDrive/CACIP/assets/logo_cacip.png"
 
 st.set_page_config(
