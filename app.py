@@ -48,7 +48,6 @@ st.caption(
 # AFFICHAGE DU LOGO
 if os.path.isfile(LOGO_PATH):
     if os.path.isfile(LOGO_PATH):
-    from PIL import Image
     logo = Image.open(LOGO_PATH).convert("RGB")
     st.image(logo, width=280, caption="CACIP")
 else:
