@@ -47,7 +47,12 @@ st.caption(
 
 # AFFICHAGE DU LOGO
 if os.path.isfile(LOGO_PATH):
-    st.image(LOGO_PATH, width=280, caption="CACIP")
+    if os.path.isfile(LOGO_PATH):
+    from PIL import Image
+    logo = Image.open(LOGO_PATH).convert("RGB")
+    st.image(logo, width=280, caption="CACIP")
+else:
+    st.error("Logo CACIP introuvable.")
 else:
     st.warning(
         "Logo introuvable. Vérifiez le fichier logo_cacip.png "
