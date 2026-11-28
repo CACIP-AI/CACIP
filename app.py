@@ -37,7 +37,7 @@ def charger_modele():
 # Interface
 st.title("🔬 CACIP")
 st.subheader("Cancer Artificial Intelligence Project")
-st.caption("Analyse expérimentale d'images histologiques mammaires")
+st.image("assets/logo_cacip.png", width=280)
 
 st.divider()
 st.header("Analyse d'une image")
