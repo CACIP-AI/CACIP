@@ -41,7 +41,7 @@ st.caption("Analyse expérimentale d'images histologiques mammaires")
 if os.path.isfile(LOGO_PATH):
     try:
         logo = Image.open(LOGO_PATH).convert("RGB")
-        st.image(logo, width=280, caption="CACIP")
+        st.image("https://raw.githubusercontent.com/CACIP-AI/CACIP/main/logo_cacip.png", width=280)
     except Exception as erreur:
         st.error("Impossible de lire le logo.")
         st.exception(erreur)
