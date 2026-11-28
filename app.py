@@ -40,7 +40,7 @@ if fichier is not None:
     st.image(image, caption="Image importée", use_container_width=True)
 
     if st.button("Analyser l'image", type="primary"):
-        if not os.path.exists(MODEL_PATH):
+        st.error(f"Modèle V3 introuvable. Chemin recherché : {MODEL_PATH}")
             st.error("Modèle V3 introuvable. Vérifie son emplacement dans Google Drive.")
         else:
             with st.spinner("Analyse en cours..."):
