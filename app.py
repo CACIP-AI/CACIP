@@ -5,8 +5,10 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-MODEL_PATH = "models/CACIP_V3.keras"
-LOGO_PATH = "assets/logo_cacip.png"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_PATH = os.path.join(BASE_DIR, "models", "CACIP_V3.keras")
+LOGO_PATH = os.path.join(BASE_DIR, "assets", "logo_cacip.png")
 
 st.set_page_config(
     page_title="CACIP",
