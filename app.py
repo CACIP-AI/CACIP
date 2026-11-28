@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image
 
 MODEL_PATH = "models/CACIP_V3.keras"
-LOGO_PATH = "/content/drive/MyDrive/CACIP/assets/logo_cacip.png"
+LOGO_PATH = "assets/logo_cacip.png"
 
 st.set_page_config(
     page_title="CACIP",
