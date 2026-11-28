@@ -12,7 +12,7 @@ from PIL import Image
 
 BASE_DIR = Path(__file__).resolve().parent
 
-MODEL_PATH = BASE_DIR / "models" / "CACIP_V3.keras"
+MODEL_PATH = BASE_DIR / "models" / "CACIP_V3.keras (4)"
 LOGO_PATH = BASE_DIR / "assets" / "logo_cacip.png"
 
 st.set_page_config(
@@ -61,6 +61,7 @@ if fichier is not None:
 
     try:
         image = Image.open(fichier).convert("RGB")
+
         st.image(
             image,
             caption="Image importée",
@@ -69,7 +70,6 @@ if fichier is not None:
 
         if st.button("Analyser l'image", type="primary"):
 
-            # Vérification du fichier modèle
             if not MODEL_PATH.is_file():
 
                 st.error(
@@ -91,7 +91,6 @@ if fichier is not None:
 
                 try:
                     with st.spinner("Chargement du modèle CACIP V3..."):
-
                         modele = charger_modele()
 
                     with st.spinner("Analyse expérimentale en cours..."):
