@@ -4,7 +4,8 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-MODEL_PATH = "models/CACIP_V3.keras (4)"
+
+MODEL_PATH = "models/CACIP_V3.keras"
 LOGO_PATH = "assets/logo_cacip.png"
 
 st.set_page_config(
