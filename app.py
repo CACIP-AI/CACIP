@@ -5,22 +5,19 @@ import numpy as np
 import gdown
 from PIL import Image
 
-# CONFIGURATION
 st.set_page_config(
     page_title="CACIP",
     page_icon="🔬",
     layout="centered"
 )
 
+# CHEMINS
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+LOGO_PATH = os.path.join(BASE_DIR, "logo_cacip.png")
 MODEL_PATH = "/tmp/CACIP_V3.keras"
 DRIVE_FILE_ID = "1j16Edxolos8a9nZmnoagiby34VRnUR5j"
-LOGO_PATH = os.path.join(os.path.dirname(__file__), "logo_cacip.png")
 
-st.write("Chemin du logo :", LOGO_PATH)
-st.write("Fichier trouvé :", os.path.exists(LOGO_PATH))
-
-
-# CHARGEMENT DU MODÈLE
+# CHARGEMENT DU MODELE
 @st.cache_resource
 def charger_modele():
     if not os.path.exists(MODEL_PATH):
@@ -29,38 +26,31 @@ def charger_modele():
             output=MODEL_PATH,
             quiet=False
         )
-
         if resultat is None:
-            raise RuntimeError(
-                "Téléchargement du modèle CACIP impossible."
-            )
+            raise RuntimeError("Téléchargement du modèle impossible.")
 
     return tf.keras.models.load_model(MODEL_PATH)
 
 
-# IDENTITÉ CACIP
+# INTERFACE CACIP
 st.title("🔬 CACIP")
 st.subheader("Cancer Artificial Intelligence Project")
-st.caption(
-    "Analyse expérimentale d'images histologiques mammaires"
-)
+st.caption("Analyse expérimentale d'images histologiques mammaires")
 
-# AFFICHAGE DU LOGO
+# LOGO
 if os.path.isfile(LOGO_PATH):
-    if os.path.isfile(LOGO_PATH):
-    logo = Image.open(LOGO_PATH).convert("RGB")
-    st.image(logo, width=280, caption="CACIP")
+    try:
+        logo = Image.open(LOGO_PATH).convert("RGB")
+        st.image(logo, width=280, caption="CACIP")
+    except Exception as erreur:
+        st.error("Impossible de lire le logo.")
+        st.exception(erreur)
 else:
-    st.error("Logo CACIP introuvable.")
-else:
-    st.warning(
-        "Logo introuvable. Vérifiez le fichier logo_cacip.png "
-        "à la racine du dépôt GitHub."
-    )
+    st.warning("Logo CACIP introuvable.")
 
 st.divider()
 
-# IMPORTATION DE L'IMAGE
+# IMPORTATION IMAGE
 st.header("Analyse d'une image")
 
 fichier = st.file_uploader(
@@ -79,6 +69,7 @@ if fichier is not None:
         )
 
         if st.button("Analyser l'image", type="primary"):
+
             try:
                 with st.spinner("Chargement du modèle CACIP V3..."):
                     modele = charger_modele()
@@ -104,14 +95,10 @@ if fichier is not None:
                         score_malin = float(prediction[0][1])
 
                     elif prediction.size == 1:
-                        score_malin = float(
-                            prediction.ravel()[0]
-                        )
+                        score_malin = float(prediction.ravel()[0])
 
                     else:
-                        st.error(
-                            "Format de sortie du modèle non reconnu."
-                        )
+                        st.error("Format de sortie du modèle non reconnu.")
                         st.stop()
 
                     if not 0 <= score_malin <= 1:
@@ -126,10 +113,7 @@ if fichier is not None:
                         confiance = 1 - score_malin
 
                 st.subheader("Résultat expérimental")
-                st.write(
-                    "Classification proposée :",
-                    resultat
-                )
+                st.write("Classification proposée :", resultat)
 
                 st.metric(
                     "Score associé à la classe proposée",
@@ -142,15 +126,12 @@ if fichier is not None:
 
                 st.warning(
                     "CACIP est un prototype de recherche. "
-                    "Ce résultat ne constitue pas un diagnostic "
-                    "médical et ne doit pas guider une décision "
-                    "de traitement."
+                    "Ce résultat ne constitue pas un diagnostic médical "
+                    "et ne doit pas guider une décision de traitement."
                 )
 
             except Exception as erreur:
-                st.error(
-                    "Erreur pendant le chargement ou l'analyse du modèle."
-                )
+                st.error("Erreur pendant le chargement ou l'analyse du modèle.")
                 st.exception(erreur)
 
     except Exception as erreur:
@@ -161,4 +142,4 @@ st.divider()
 
 st.caption(
     "CACIP — Prototype de recherche utilisant le modèle V3"
-        )
+)
