@@ -14,7 +14,7 @@ st.set_page_config(
 # CONFIGURATION
 MODEL_PATH = "/tmp/CACIP_V3.keras"
 DRIVE_FILE_ID = "1j16Edxolos8a9nZmnoagiby34VRnUR5j"
-LOGO_PATH = "assets/logo_cacip.png"
+LOGO_PATH = "logo_cacip.png"
 
 
 # CHARGEMENT DU MODÈLE
