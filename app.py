@@ -14,7 +14,8 @@ st.set_page_config(
 
 MODEL_PATH = "/tmp/CACIP_V3.keras"
 DRIVE_FILE_ID = "1j16Edxolos8a9nZmnoagiby34VRnUR5j"
-LOGO_PATH = os.path.join(os.path.dirname(__file__), "logo_cacip.png")
+st.write("Chemin du logo :", LOGO_PATH)
+st.write("Fichier trouvé :", os.path.exists(LOGO_PATH))
 
 
 # CHARGEMENT DU MODÈLE
