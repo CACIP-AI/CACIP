@@ -5,13 +5,13 @@ import numpy as np
 import gdown
 from PIL import Image
 
+# CONFIGURATION
 st.set_page_config(
     page_title="CACIP",
     page_icon="🔬",
     layout="centered"
 )
 
-# CONFIGURATION
 MODEL_PATH = "/tmp/CACIP_V3.keras"
 DRIVE_FILE_ID = "1j16Edxolos8a9nZmnoagiby34VRnUR5j"
 LOGO_PATH = "logo_cacip.png"
@@ -20,9 +20,7 @@ LOGO_PATH = "logo_cacip.png"
 # CHARGEMENT DU MODÈLE
 @st.cache_resource
 def charger_modele():
-
     if not os.path.exists(MODEL_PATH):
-
         resultat = gdown.download(
             id=DRIVE_FILE_ID,
             output=MODEL_PATH,
@@ -31,32 +29,31 @@ def charger_modele():
 
         if resultat is None:
             raise RuntimeError(
-                "Téléchargement du modèle CACIP V3 impossible."
+                "Téléchargement du modèle CACIP impossible."
             )
 
     return tf.keras.models.load_model(MODEL_PATH)
 
 
-# INTERFACE PRINCIPALE
+# IDENTITÉ CACIP
 st.title("🔬 CACIP")
-
 st.subheader("Cancer Artificial Intelligence Project")
-
 st.caption(
     "Analyse expérimentale d'images histologiques mammaires"
 )
 
-# LOGO CACIP
-if os.path.exists(LOGO_PATH):
+# AFFICHAGE DU LOGO
+if os.path.isfile(LOGO_PATH):
     st.image(LOGO_PATH, width=280)
 else:
     st.warning(
-        "Logo introuvable. Vérifiez le dossier assets "
-        "et le nom logo_cacip.png."
+        "Logo introuvable. Vérifiez le fichier logo_cacip.png "
+        "à la racine du dépôt GitHub."
     )
 
 st.divider()
 
+# IMPORTATION DE L'IMAGE
 st.header("Analyse d'une image")
 
 fichier = st.file_uploader(
@@ -64,9 +61,7 @@ fichier = st.file_uploader(
     type=["jpg", "jpeg", "png"]
 )
 
-
 if fichier is not None:
-
     try:
         image = Image.open(fichier).convert("RGB")
 
@@ -77,13 +72,11 @@ if fichier is not None:
         )
 
         if st.button("Analyser l'image", type="primary"):
-
             try:
                 with st.spinner("Chargement du modèle CACIP V3..."):
                     modele = charger_modele()
 
                 with st.spinner("Analyse expérimentale en cours..."):
-
                     image_preparee = image.resize((224, 224))
 
                     tableau = np.array(
@@ -121,13 +114,11 @@ if fichier is not None:
                     if score_malin >= 0.5:
                         resultat = "Maligne"
                         confiance = score_malin
-
                     else:
                         resultat = "Bénigne"
                         confiance = 1 - score_malin
 
                 st.subheader("Résultat expérimental")
-
                 st.write(
                     "Classification proposée :",
                     resultat
@@ -159,9 +150,8 @@ if fichier is not None:
         st.error("Impossible de lire cette image.")
         st.exception(erreur)
 
-
 st.divider()
 
 st.caption(
     "CACIP — Prototype de recherche utilisant le modèle V3"
-                    )
+        )
